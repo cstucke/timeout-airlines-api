@@ -19,9 +19,10 @@ public class User {
     @Column(nullable = false)
     private String lastname;
     private String address;
-    @Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String email;
     private String phone;
     @Column(nullable = false)
     private LocalDate birthdate;
+
 }
