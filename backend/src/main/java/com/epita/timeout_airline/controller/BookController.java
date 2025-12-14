@@ -1,27 +1,25 @@
 package com.epita.timeout_airline.controller;
 
+import com.epita.timeout_airline.model.Book;
 import com.epita.timeout_airline.service.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
 
 @RestController
 @RequestMapping("/booking")
+@RequiredArgsConstructor
 public class BookController {
-
-    @Autowired
-    private BookService bookService;
-
-    // Inline DTO for student-style simplicity
-    public static class BookingRequest {
-        public Long flightId;
-        public Long clientId;
-        public String seatType;
-    }
+    private final BookService bookService;
 
     @PostMapping
-    public Map<String, Object> bookFlight(@RequestBody BookingRequest request) {
-        return bookService.bookFlight(request.flightId, request.clientId, request.seatType);
+    public ResponseEntity<Book> bookFlight(
+            @RequestParam Long flightId,
+            @RequestParam Long passportNumber,
+            @RequestParam String seatType
+    ) {
+        return ResponseEntity.ok(
+                bookService.bookFlight(flightId, passportNumber, seatType)
+        );
     }
 }
