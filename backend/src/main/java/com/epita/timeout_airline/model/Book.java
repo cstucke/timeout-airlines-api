@@ -8,6 +8,10 @@ import lombok.Data;
 @Table(name="bookings")
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "flight_id", nullable = false)
     private Flight flight;
