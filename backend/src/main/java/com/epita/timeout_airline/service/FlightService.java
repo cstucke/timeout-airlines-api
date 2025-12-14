@@ -2,7 +2,6 @@ package com.epita.timeout_airline.service;
 
 import com.epita.timeout_airline.repository.FlightRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.epita.timeout_airline.model.Flight;
 import java.time.LocalDate;
