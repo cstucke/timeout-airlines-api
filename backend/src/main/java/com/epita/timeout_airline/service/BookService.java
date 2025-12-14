@@ -21,11 +21,9 @@ public class BookService {
             Long passportNumber,
             String seatType
     ) {
-        Flight flight = flightRepository.findById(flightId)
-                .orElseThrow(() -> new RuntimeException("Flight not found"));
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Flight not found"));
 
-        Client client = clientRepository.findById(passportNumber)
-                .orElseThrow(() -> new RuntimeException("Client not found"));
+        Client client = clientRepository.findById(passportNumber).orElseThrow(() -> new RuntimeException("Client not found"));
 
         Book booking = new Book();
         booking.setFlight(flight);
@@ -44,15 +42,9 @@ public class BookService {
         LocalDate startYear = LocalDate.now().withDayOfYear(1);
         LocalDate endYear = LocalDate.now().withMonth(12).withDayOfMonth(31);
 
-        long flightsThisYear = milesRewardRepository.countByClientAndDateBetween(
-                        client, startYear, endYear
-                );
+        long flightsThisYear = milesRewardRepository.countByClientAndDateBetween(client, startYear, endYear);
 
-        if (flightsThisYear == 3) {String discountCode = UUID.randomUUID()
-                    .toString()
-                    .substring(0, 8)
-                    .toUpperCase();
-
+        if (flightsThisYear == 3) {String discountCode = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
             System.out.println("Discount code generated for client : " + discountCode);
         }
 
