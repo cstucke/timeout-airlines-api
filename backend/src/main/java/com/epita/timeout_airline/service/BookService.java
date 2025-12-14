@@ -1,28 +1,26 @@
 package com.epita.timeout_airline.service;
 
-import com.epita.timeout_airline.model.Book;
-import com.epita.timeout_airline.model.Client;
-import com.epita.timeout_airline.model.Flight;
-import com.epita.timeout_airline.repository.BookRepository;
-import com.epita.timeout_airline.repository.ClientRepository;
-import com.epita.timeout_airline.repository.FlightRepository;
+import com.epita.timeout_airline.model.*;
+import com.epita.timeout_airline.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BookService {
 
     @Autowired
     private FlightRepository flightRepository;
-
     @Autowired
     private ClientRepository clientRepository;
-
     @Autowired
     private BookRepository bookRepository;
+    @Autowired
+    private MilesRewardRepository milesRewardRepository;
 
     public Map<String, Object> bookFlight(Long flightId, Long clientId, String seatType) {
 
@@ -42,11 +40,25 @@ public class BookService {
         booking.setTypeOfSeat(seatType);
         bookRepository.save(booking);
 
+        MilesReward reward = new MilesReward();
+        reward.setClient(client);
+        reward.setFlight(flight);
+        reward.setDate(LocalDate.now());
+        milesRewardRepository.save(reward);
+
+        int year = LocalDate.now().getYear();
+        long flightsThisYear = milesRewardRepository.countByClientAndDateBetween(
+                client, LocalDate.of(year,1,1), LocalDate.of(year,12,31)
+        );
+
+        String discountCode = null;
+        if (flightsThisYear >= 3) {
+            discountCode = UUID.randomUUID().toString().substring(0,8).toUpperCase();
+        }
+
         Map<String, Object> response = new HashMap<>();
-        response.put("bookingId", booking.getId());
-        response.put("flightNumber", flight.getFlightNumber());
-        response.put("clientId", client.getId());
-        response.put("seatType", seatType);
+        response.put("booking", booking);
+        response.put("discountCode", discountCode);
 
         return response;
     }
