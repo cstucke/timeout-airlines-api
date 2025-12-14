@@ -8,6 +8,11 @@ import java.util.List;
 
 @Repository
 public interface FlightRepository extends JpaRepository<Flight, Long> {
+    List<Flight> findByDepartureCityAndArrivalCity(
+            String departureCity,
+            String arrivalCity
+    );
+
     List<Flight> findByDepartureCityAndArrivalCityAndDepartureTimeBetween(
             String departureCity,
             String arrivalCity,
