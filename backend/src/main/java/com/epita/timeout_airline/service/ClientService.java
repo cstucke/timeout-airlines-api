@@ -1,10 +1,11 @@
 package com.epita.timeout_airline.service;
 
 import com.epita.timeout_airline.repository.ClientRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.epita.timeout_airline.model.Client;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -15,6 +16,16 @@ public class ClientService {
     @Transactional
     public Client registerClient(Client client) {
         return clientRepository.save(client);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<Client> findById(Long id) {
+        return clientRepository.findById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Client> findAll() {
+        return clientRepository.findAll();
     }
 
 }

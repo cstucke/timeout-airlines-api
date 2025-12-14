@@ -1,7 +1,7 @@
 package com.epita.timeout_airline.service;
 
 import com.epita.timeout_airline.repository.EmployeeRepository;
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.epita.timeout_airline.model.Employee;
