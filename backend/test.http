@@ -1,0 +1,211 @@
+############################################
+### TIMEOUT AIRLINES — FULL PROJECT DEMO ###
+############################################
+
+### This file demonstrates:
+### - CRUD on all entities
+### - Flight search
+### - Booking system
+### - MilesReward + discount logic
+### - Data consistency
+
+############################################
+### 1. INFRASTRUCTURE SETUP (AIRPORTS & PLANES)
+############################################
+
+### Create Departure Airport (Kinshasa)
+POST http://localhost:8080/airports
+Content-Type: application/json
+
+{
+  "nameAirport": "N’djili International Airport",
+  "cityAirport": "Kinshasa",
+  "countryAirport": "Democratic Republic of Congo"
+}
+
+### Create Arrival Airport (Budapest)
+POST http://localhost:8080/airports
+Content-Type: application/json
+
+{
+  "nameAirport": "Ferenc Liszt International Airport",
+  "cityAirport": "Budapest",
+  "countryAirport": "Hungary"
+}
+
+### Create Plane
+POST http://localhost:8080/planes
+Content-Type: application/json
+
+{
+  "brand": "Boeing",
+  "model": "747",
+  "manufacturingYear": 2023
+}
+
+############################################
+### 2. USER MANAGEMENT (CLIENT & EMPLOYEE)
+############################################
+
+### Create Client
+POST http://localhost:8080/clients
+Content-Type: application/json
+
+{
+  "firstname": "Armand",
+  "lastname": "Stucke",
+  "address": "123 Goldilocks St",
+  "email": "armandstucke@gmail.com",
+  "phone": "+33 07 12 90 43 27",
+  "birthdate": "2000-05-07",
+  "numPassport": "KFC234099"
+}
+
+### Create Employee
+POST http://localhost:8080/employees
+Content-Type: application/json
+
+{
+  "firstname": "Bob",
+  "lastname": "Jenkins",
+  "address": "1 Sesame St",
+  "email": "ceo@timeout-airlines.com",
+  "phone": "+1 908 355 0704",
+  "birthdate": "1970-07-10",
+  "numEmp": "EMP-001",
+  "profession": "CEO",
+  "title": "Dr."
+}
+
+############################################
+### 3. FLIGHT CREATION
+############################################
+
+### Create Flight (Kinshasa → Budapest)
+### Plane ID = 1 | Departure Airport = 1 | Arrival Airport = 2
+POST http://localhost:8080/flights?planeId=1&departureAirportId=1&arrivalAirportId=2
+Content-Type: application/json
+
+{
+  "flightNumber": "TO-101",
+  "departureCity": "Kinshasa",
+  "arrivalCity": "Budapest",
+  "departureTime": "2025-12-25T08:00:00",
+  "arrivalTime": "2025-12-25T20:00:00",
+  "numberOfSeats": 3,
+  "firstClassSeatPrice": 1500,
+  "premiumSeatPrice": 1000,
+  "businessClassPrice": 800,
+  "economyClassPrice": 400
+}
+
+############################################
+### 4. FLIGHT SEARCH (FEATURE 6)
+############################################
+
+### Search Available Flights
+GET http://localhost:8080/flights/search?departureCity=Kinshasa&arrivalCity=Budapest&date=2025-12-25
+
+############################################
+### 5. BOOKING TRANSACTIONS (FEATURE 7 & 8)
+############################################
+
+### Booking #1 (Economy)
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "flightNumber": "TO-101",
+  "passportNumber": "KFC234099",
+  "seatType": "ECONOMY"
+}
+
+### Booking #2 (Business)
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "flightNumber": "TO-101",
+  "passportNumber": "KFC234099",
+  "seatType": "BUSINESS"
+}
+
+### Booking #3 (First Class)
+### ➜ This booking triggers MilesReward discount logic
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "flightNumber": "TO-101",
+  "passportNumber": "KFC234099",
+  "seatType": "FIRST"
+}
+
+############################################
+### 6. DATA VERIFICATION (READ OPERATIONS)
+############################################
+
+### All Clients
+GET http://localhost:8080/clients
+
+### All Employees
+GET http://localhost:8080/employees
+
+### All Airports
+GET http://localhost:8080/airports
+
+### All Planes
+GET http://localhost:8080/planes
+
+### All Flights
+GET http://localhost:8080/flights
+
+### All Bookings
+GET http://localhost:8080/books
+
+### All Miles Rewards
+GET http://localhost:8080/miles-rewards
+
+############################################
+### 7. DELETE OPERATIONS (CRUD COMPLETENESS)
+############################################
+
+### Delete Booking
+DELETE http://localhost:8080/books/1
+
+### Delete Flight
+DELETE http://localhost:8080/flights/TO-101
+
+### Delete Client
+DELETE http://localhost:8080/clients/KFC234099
+
+### Delete Employee
+DELETE http://localhost:8080/employees/EMP-001
+
+### Delete Plane
+DELETE http://localhost:8080/planes/1
+
+### Delete Airports
+DELETE http://localhost:8080/airports/1
+
+###
+DELETE http://localhost:8080/airports/2
+
+############################################
+### 8. FINAL VERIFICATION (EMPTY STATE)
+############################################
+
+### Get empty clients
+GET http://localhost:8080/clients
+
+### Get Empty Employees
+GET http://localhost:8080/employees
+
+### Get Empty Flights
+GET http://localhost:8080/flights
+
+### Get Empty Bookings
+GET http://localhost:8080/books
+
+### Get Miles Rewards
+GET http://localhost:8080/miles-rewards

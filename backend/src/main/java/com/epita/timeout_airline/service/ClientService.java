@@ -28,4 +28,25 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
+    @Transactional
+    public Client updateClient(Long id, Client clientDetails) {
+        Client client = clientRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Client DNE, id: " + id));
+
+        client.setFirstname(clientDetails.getFirstname());
+        client.setLastname(clientDetails.getLastname());
+        client.setAddress(clientDetails.getAddress());
+        client.setEmail(clientDetails.getEmail());
+        client.setPhone(clientDetails.getPhone());
+        client.setBirthdate(clientDetails.getBirthdate());
+        client.setPassportNumber(clientDetails.getPassportNumber());
+
+        return clientRepository.save(client);
+    }
+
+    @Transactional
+    public void deleteClient(Long id) {
+        clientRepository.deleteById(id);
+    }
+
 }
