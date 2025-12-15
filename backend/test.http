@@ -187,14 +187,25 @@ DELETE http://localhost:8080/planes/1
 
 ### Delete Airports
 DELETE http://localhost:8080/airports/1
+
+###
 DELETE http://localhost:8080/airports/2
 
 ############################################
 ### 8. FINAL VERIFICATION (EMPTY STATE)
 ############################################
 
+### Get empty clients
 GET http://localhost:8080/clients
+
+### Get Empty Employees
 GET http://localhost:8080/employees
+
+### Get Empty Flights
 GET http://localhost:8080/flights
+
+### Get Empty Bookings
 GET http://localhost:8080/books
+
+### Get Miles Rewards
 GET http://localhost:8080/miles-rewards
