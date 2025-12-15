@@ -1,0 +1,181 @@
+### 1. INFRASTRUCTURE CREATION (AIRPORTS & PLANES)
+
+### Create Departure Airport (Kinshasa)
+POST http://localhost:8080/airports
+Content-Type: application/json
+
+{
+  "name": "N’djili International Airport",
+  "city": "Kinshasa",
+  "country": "Democratic Republic of Congo",
+  "code": "FIH"
+}
+
+### Create Arrival Airport (Budapest)
+POST http://localhost:8080/airports
+Content-Type: application/json
+
+{
+  "name": "Ferenc Liszt International Airport",
+  "city": "Budapest",
+  "country": "Hungary",
+  "code": "BUD"
+}
+
+### Create Plane (Boeing 747)
+POST http://localhost:8080/planes
+Content-Type: application/json
+
+{
+  "brand": "Boeing",
+  "model": "747",
+  "manufacturingYear": 2023
+}
+
+### 2. USER CREATION (CLIENTS & EMPLOYEES)
+
+### Create Client (Armand)
+POST http://localhost:8080/clients
+Content-Type: application/json
+
+{
+  "firstname": "Armand",
+  "lastname": "Stucke",
+  "address": "123 Goldilocks St",
+  "email": "armandstucke@gmail.com",
+  "phone": "+33 07 12 90 43 27",
+  "birthdate": "2000-05-07",
+  "passportNumber": "KFC234099"
+}
+
+### Create Employee (Bob)
+POST http://localhost:8080/employees
+Content-Type: application/json
+
+{
+  "firstname": "Bob",
+  "lastname": "Jenkins",
+  "address": "1 Sesame St",
+  "email": "ceo@timeout-airlines.com",
+  "phone": "+1 908 355 0704",
+  "birthdate": "1970-07-10",
+  "badgeNumber": "EMP-001",
+  "profession": "CEO",
+  "title": "Dr."
+}
+
+### 3. FLIGHT CREATION
+
+### Create Flight (Kinshasa -> Budapest)
+# Note: Linking Plane 1, Airport 1 (Dep), Airport 2 (Arr)
+POST http://localhost:8080/flights?planeId=1&depId=1&arrId=2
+Content-Type: application/json
+
+{
+  "flightNumber": "TO-101",
+  "departureTime": "2025-12-25T08:00:00",
+  "arrivalTime": "2025-12-25T20:00:00",
+  "numberOfSeat": 200,
+  "firstClassSeatPrice": 1500.00,
+  "premiumSeatPrice": 1000.00,
+  "businessClassSeatPrice": 800.00,
+  "economicsClassSeatPrice": 400.00
+}
+
+### 4. BOOKING TRANSACTIONS
+
+### Book Flight 1 (Economy)
+POST http://localhost:8080/bookings
+Content-Type: application/json
+
+{
+  "clientId": 1,
+  "flightId": 1,
+  "typeOfSeat": "Economy"
+}
+
+### Book Flight 2 (Business - Reward Counter Test)
+POST http://localhost:8080/bookings
+Content-Type: application/json
+
+{
+  "clientId": 1,
+  "flightId": 1,
+  "typeOfSeat": "Business"
+}
+
+### Book Flight 3 (First Class - Reward Counter Test)
+POST http://localhost:8080/bookings
+Content-Type: application/json
+
+{
+  "clientId": 1,
+  "flightId": 1,
+  "typeOfSeat": "First Class"
+}
+
+### 5. VERIFY DATA (READ ALL)
+
+### Get All Clients
+GET http://localhost:8080/clients
+
+### Get All Employees
+GET http://localhost:8080/employees
+
+### Get All Airports
+GET http://localhost:8080/airports
+
+### Get All Planes
+GET http://localhost:8080/planes
+
+### Get All Flights
+GET http://localhost:8080/flights
+
+### Get All Bookings
+GET http://localhost:8080/bookings
+
+### Search Flights Specific Test
+GET http://localhost:8080/flights/search?from=Kinshasa&to=Budapest&date=2025-12-25
+
+### 6. DELETE OPERATIONS
+
+### Delete Booking
+DELETE http://localhost:8080/bookings/1
+
+### Delete Flight
+DELETE http://localhost:8080/flights/1
+
+### Delete Client
+DELETE http://localhost:8080/clients/1
+
+### Delete Employee
+DELETE http://localhost:8080/employees/1
+
+### Delete Plane
+DELETE http://localhost:8080/planes/1
+
+### Delete Kinshasa Airport
+DELETE http://localhost:8080/airports/1
+
+### Delete Budapest Airport
+DELETE http://localhost:8080/airports/2
+
+### 7. VERIFY DELETION (SHOULD BE EMPTY)
+
+### Verify Clients Deleted
+GET http://localhost:8080/clients
+
+### Verify Employees Deleted
+GET http://localhost:8080/employees
+
+### Verify Airports Deleted
+GET http://localhost:8080/airports
+
+### Verify Planes Deleted
+GET http://localhost:8080/planes
+
+### Verify Flights Deleted
+GET http://localhost:8080/flights
+
+### Verify Bookings Deleted
+GET http://localhost:8080/bookings
