@@ -21,5 +21,5 @@ public class Book {
     private Client client;
 
     @Column(nullable = false)
-    private String typeOfSeat; // It can be one of those : "FIRST", "PREMIUM", "BUSINESS", "ECONOMY"
+    private String typeOfSeat;
 }

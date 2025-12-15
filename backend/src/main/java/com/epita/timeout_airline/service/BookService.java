@@ -2,64 +2,53 @@ package com.epita.timeout_airline.service;
 
 import com.epita.timeout_airline.model.*;
 import com.epita.timeout_airline.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
 
-    @Autowired
-    private FlightRepository flightRepository;
-    @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
-    private BookRepository bookRepository;
-    @Autowired
-    private MilesRewardRepository milesRewardRepository;
+    private final BookRepository bookRepository;
+    private final FlightRepository flightRepository;
+    private final ClientRepository clientRepository;
+    private final MilesRewardRepository milesRewardRepository;
 
-    public Map<String, Object> bookFlight(Long flightId, Long clientId, String seatType) {
+    public Book bookFlight(
+            Long flightId,
+            Long passportNumber,
+            String seatType
+    ) {
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Flight not found"));
 
-        Flight flight = flightRepository.findById(flightId)
-                .orElseThrow(() -> new RuntimeException("Flight not found"));
-        Client client = clientRepository.findById(clientId)
-                .orElseThrow(() -> new RuntimeException("Client not found"));
-
-        long bookedSeats = bookRepository.countByFlightId(flight.getId());
-        if (bookedSeats >= flight.getNumberOfSeats()) {
-            throw new RuntimeException("No available seats");
-        }
+        Client client = clientRepository.findById(passportNumber).orElseThrow(() -> new RuntimeException("Client not found"));
 
         Book booking = new Book();
         booking.setFlight(flight);
         booking.setClient(client);
         booking.setTypeOfSeat(seatType);
-        bookRepository.save(booking);
+
+        Book savedBooking = bookRepository.save(booking);
 
         MilesReward reward = new MilesReward();
         reward.setClient(client);
         reward.setFlight(flight);
         reward.setDate(LocalDate.now());
+
         milesRewardRepository.save(reward);
 
-        int year = LocalDate.now().getYear();
-        long flightsThisYear = milesRewardRepository.countByClientAndDateBetween(
-                client, LocalDate.of(year,1,1), LocalDate.of(year,12,31)
-        );
+        LocalDate startYear = LocalDate.now().withDayOfYear(1);
+        LocalDate endYear = LocalDate.now().withMonth(12).withDayOfMonth(31);
 
-        String discountCode = null;
-        if (flightsThisYear >= 3) {
-            discountCode = UUID.randomUUID().toString().substring(0,8).toUpperCase();
+        long flightsThisYear = milesRewardRepository.countByClientAndDateBetween(client, startYear, endYear);
+
+        if (flightsThisYear == 3) {String discountCode = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+            System.out.println("Discount code generated for client : " + discountCode);
         }
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("booking", booking);
-        response.put("discountCode", discountCode);
+        return savedBooking;
 
-        return response;
     }
 }

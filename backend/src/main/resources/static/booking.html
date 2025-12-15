@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Book Flight</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<h2>Book Flight</h2>
+
+<form id="bookingForm">
+    <input type="hidden" id="flightNumber">
+
+    <label>Passport Number:</label>
+    <input type="text" id="passport" required>
+
+    <label>Seat Type:</label>
+    <select id="seatType">
+        <option>ECONOMY</option>
+        <option>BUSINESS</option>
+        <option>PREMIUM</option>
+        <option>FIRST</option>
+    </select>
+
+    <button type="submit">Confirm Booking</button>
+</form>
+
+<p id="message"></p>
+
+<script src="js/booking.js"></script>
+</body>
+</html>
