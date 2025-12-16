@@ -23,9 +23,7 @@ public class FlightController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Flight> getFlight(@PathVariable Long id) {
-        return flightService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return flightService.findById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
@@ -34,11 +32,7 @@ public class FlightController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<Flight>> searchFlights(
-            @RequestParam String departureCity,
-            @RequestParam String arrivalCity,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date //get a correct date
-    ) {
+    public ResponseEntity<List<Flight>> searchFlights(@RequestParam String departureCity, @RequestParam String arrivalCity, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date ) {
         List<Flight> flights = flightService.searchFlights(departureCity, arrivalCity, date);
         return ResponseEntity.ok(flights);
     }
