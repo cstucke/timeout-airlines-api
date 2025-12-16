@@ -38,4 +38,10 @@ public class Flight {
     private double businessClassPrice;
     private double economicsClassPrice;
 
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private java.util.List<Book> bookings;
+
+    @OneToMany(mappedBy = "flight", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private java.util.List<MilesReward> rewards;
+
 }

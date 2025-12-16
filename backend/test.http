@@ -348,5 +348,5 @@ GET http://localhost:8080/flights
 ### Get Empty Bookings
 GET http://localhost:8080/booking
 
-### Get Miles Rewards
-GET http://localhost:8080/miles-rewards
+### Get Empty Airports
+GET http://localhost:8080/airports
