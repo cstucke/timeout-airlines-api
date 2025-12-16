@@ -5,7 +5,9 @@ import com.epita.timeout_airline.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,13 +18,8 @@ public class BookService {
     private final ClientRepository clientRepository;
     private final MilesRewardRepository milesRewardRepository;
 
-    public Book bookFlight(
-            Long flightId,
-            Long passportNumber,
-            String seatType
-    ) {
+    public Book bookFlight(Long flightId, Long passportNumber, String seatType) {
         Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Flight not found"));
-
         Client client = clientRepository.findById(passportNumber).orElseThrow(() -> new RuntimeException("Client not found"));
 
         Book booking = new Book();
@@ -51,4 +48,23 @@ public class BookService {
         return savedBooking;
 
     }
+
+    public Optional<Book> findById(Long id) {
+        return bookRepository.findById(id);
+    }
+
+    public List<Book> findAll() {
+        return bookRepository.findAll();
+    }
+
+    public Book updateSeatType(Long id, String seatType) {
+        Book booking = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Booking not found"));
+        booking.setTypeOfSeat(seatType);
+        return bookRepository.save(booking);
+    }
+
+    public void delete(Long id) {
+        bookRepository.deleteById(id);
+    }
+
 }
