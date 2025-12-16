@@ -1,17 +1,17 @@
-############################################
-### TIMEOUT AIRLINES — FULL PROJECT DEMO ###
-############################################
+## ##########################################
+## TIMEOUT AIRLINES — FULL PROJECT DEMO ###
+## ##########################################
 
-### This file demonstrates:
-### - CRUD on all entities
-### - Flight search
-### - Booking system
-### - MilesReward + discount logic
-### - Data consistency
+## This file demonstrates:
+## - CRUD on all entities
+## - Flight search
+## - Booking system
+## - MilesReward + discount logic
+## - Data consistency
 
-############################################
-### 1. INFRASTRUCTURE SETUP (AIRPORTS & PLANES)
-############################################
+## ##########################################
+## 1. INFRASTRUCTURE SETUP (AIRPORTS & PLANES)
+## ##########################################
 
 ### Create Departure Airport (Kinshasa)
 POST http://localhost:8080/airports
@@ -43,11 +43,11 @@ Content-Type: application/json
   "manufacturingYear": 2023
 }
 
-############################################
-### 2. USER MANAGEMENT (CLIENT & EMPLOYEE)
-############################################
-
 ### Create Client
+## ##########################################
+## 2. USER MANAGEMENT (CLIENT & EMPLOYEE)
+## ##########################################
+
 POST http://localhost:8080/clients
 Content-Type: application/json
 
@@ -77,12 +77,12 @@ Content-Type: application/json
   "title": "Dr."
 }
 
-############################################
-### 3. FLIGHT CREATION
-############################################
-
 ### Create Flight (Kinshasa → Budapest)
-### Plane ID = 1 | Departure Airport = 1 | Arrival Airport = 2
+## Plane ID = 1 | Departure Airport = 1 | Arrival Airport = 2
+## ##########################################
+## 3. FLIGHT CREATION
+## ##########################################
+
 POST http://localhost:8080/flights?planeId=1&departureAirportId=1&arrivalAirportId=2
 Content-Type: application/json
 
@@ -99,18 +99,18 @@ Content-Type: application/json
   "economyClassPrice": 400
 }
 
-############################################
-### 4. FLIGHT SEARCH (FEATURE 6)
-############################################
-
 ### Search Available Flights
+## ##########################################
+## 4. FLIGHT SEARCH (FEATURE 6)
+## ##########################################
+
 GET http://localhost:8080/flights/search?departureCity=Kinshasa&arrivalCity=Budapest&date=2025-12-25
 
-############################################
-### 5. BOOKING TRANSACTIONS (FEATURE 7 & 8)
-############################################
+### Booking 1 (Economy)
+## ##########################################
+## 5. BOOKING TRANSACTIONS (FEATURE 7 & 8)
+## ##########################################
 
-### Booking #1 (Economy)
 POST http://localhost:8080/books
 Content-Type: application/json
 
@@ -120,7 +120,7 @@ Content-Type: application/json
   "seatType": "ECONOMY"
 }
 
-### Booking #2 (Business)
+### Booking 2 (Business)
 POST http://localhost:8080/books
 Content-Type: application/json
 
@@ -130,7 +130,7 @@ Content-Type: application/json
   "seatType": "BUSINESS"
 }
 
-### Booking #3 (First Class)
+### Booking 3 (First Class)
 ### ➜ This booking triggers MilesReward discount logic
 POST http://localhost:8080/books
 Content-Type: application/json
@@ -141,11 +141,11 @@ Content-Type: application/json
   "seatType": "FIRST"
 }
 
-############################################
-### 6. DATA VERIFICATION (READ OPERATIONS)
-############################################
-
 ### All Clients
+## ##########################################
+## 6. DATA VERIFICATION (READ OPERATIONS)
+## ##########################################
+
 GET http://localhost:8080/clients
 
 ### All Employees
@@ -166,11 +166,11 @@ GET http://localhost:8080/books
 ### All Miles Rewards
 GET http://localhost:8080/miles-rewards
 
-############################################
-### 7. DELETE OPERATIONS (CRUD COMPLETENESS)
-############################################
-
 ### Delete Booking
+## ##########################################
+## 7. DELETE OPERATIONS (CRUD COMPLETENESS)
+## ##########################################
+
 DELETE http://localhost:8080/books/1
 
 ### Delete Flight
@@ -185,17 +185,17 @@ DELETE http://localhost:8080/employees/EMP-001
 ### Delete Plane
 DELETE http://localhost:8080/planes/1
 
-### Delete Airports
+### Delete Airport 1
 DELETE http://localhost:8080/airports/1
 
-###
+### Delete Airport 2
 DELETE http://localhost:8080/airports/2
 
-############################################
-### 8. FINAL VERIFICATION (EMPTY STATE)
-############################################
-
 ### Get empty clients
+## ##########################################
+## 8. FINAL VERIFICATION (EMPTY STATE)
+## ##########################################
+
 GET http://localhost:8080/clients
 
 ### Get Empty Employees
@@ -205,7 +205,7 @@ GET http://localhost:8080/employees
 GET http://localhost:8080/flights
 
 ### Get Empty Bookings
-GET http://localhost:8080/books
+GET http://localhost:8080/booking
 
 ### Get Miles Rewards
-GET http://localhost:8080/miles-rewards
+GET http://localhost:8080/booking
