@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 public class Flight {
 
     @Id
+    private Long id;
+
     private String flightNumber;
 
     private String departureCity;

@@ -12,7 +12,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class FlightService {
 
-    private FlightRepository flightRepository;
+    private final FlightRepository flightRepository;
 
     public Flight saveFlight(Flight flight) {
         return flightRepository.save(flight);
