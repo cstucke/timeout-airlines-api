@@ -1,6 +1,7 @@
 spring:
   application:
     name: timeout-airline
+
   datasource:
     url: jdbc:postgresql://localhost:5432/timeout_airline_db
     driver-class-name: org.postgresql.Driver
@@ -13,3 +14,4 @@ spring:
       hibernate:
         format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        globally_quoted_identifiers: true

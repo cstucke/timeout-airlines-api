@@ -1,5 +1,6 @@
 package com.epita.timeout_airline.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
@@ -15,12 +16,17 @@ public class MilesReward {
 
     @ManyToOne
     @JoinColumn(name="client_id", nullable=false)
+    @JsonIgnore
     private Client client;
 
     @ManyToOne
     @JoinColumn(name="flight_id", nullable=false)
+    @JsonIgnore
     private Flight flight;
 
     @Column(nullable = false)
     private LocalDate date;
+
+    @Column
+    private String discountCode;
 }

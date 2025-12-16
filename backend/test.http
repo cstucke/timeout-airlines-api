@@ -18,9 +18,9 @@ POST http://localhost:8080/airports
 Content-Type: application/json
 
 {
-  "nameAirport": "N’djili International Airport",
-  "cityAirport": "Kinshasa",
-  "countryAirport": "Democratic Republic of Congo"
+  "name": "N’djili International Airport",
+  "city": "Kinshasa",
+  "country": "Democratic Republic of Congo"
 }
 
 ### Create Arrival Airport (Budapest)
@@ -28,9 +28,19 @@ POST http://localhost:8080/airports
 Content-Type: application/json
 
 {
-  "nameAirport": "Ferenc Liszt International Airport",
-  "cityAirport": "Budapest",
-  "countryAirport": "Hungary"
+  "name": "Ferenc Liszt International Airport",
+  "city": "Budapest",
+  "country": "Hungary"
+}
+
+### Update Departure Airport
+PUT http://localhost:8080/airports/1
+Content-Type: application/json
+
+{
+  "name": "N’djili International Airport",
+  "city": "Kinshasa",
+  "country": "The Democratic Republic of Congo"
 }
 
 ### Create Plane
@@ -40,10 +50,20 @@ Content-Type: application/json
 {
   "brand": "Boeing",
   "model": "747",
-  "manufacturingYear": 2023
+  "manufactureYear": 2023
 }
 
-### Create Client
+### Update Plane
+PUT http://localhost:8080/planes/1
+Content-Type: application/json
+
+{
+  "brand": "Boeing",
+  "model": "747",
+  "manufactureYear": 2019
+}
+
+### Create Client 1
 ## ##########################################
 ## 2. USER MANAGEMENT (CLIENT & EMPLOYEE)
 ## ##########################################
@@ -58,7 +78,21 @@ Content-Type: application/json
   "email": "armandstucke@gmail.com",
   "phone": "+33 07 12 90 43 27",
   "birthdate": "2000-05-07",
-  "numPassport": "KFC234099"
+  "passportNumber": "KFC234099"
+}
+
+### Create Client 2
+POST http://localhost:8080/clients
+Content-Type: application/json
+
+{
+  "firstname": "Charlie",
+  "lastname": "Vieau",
+  "address": "101 James St",
+  "email": "charlesvieau@gmail.com",
+  "phone": "+33 05 12 09 34 23",
+  "birthdate": "1995-06-01",
+  "passportNumber": "PJC268139"
 }
 
 ### Create Employee
@@ -72,12 +106,42 @@ Content-Type: application/json
   "email": "ceo@timeout-airlines.com",
   "phone": "+1 908 355 0704",
   "birthdate": "1970-07-10",
-  "numEmp": "EMP-001",
+  "employeeNumber": 100413,
   "profession": "CEO",
   "title": "Dr."
 }
 
-### Create Flight (Kinshasa → Budapest)
+### Update Client 1
+PUT http://localhost:8080/clients/1
+Content-Type: application/json
+
+{
+  "firstname": "Armand",
+  "lastname": "Stucke",
+  "address": "456 Silver Ln",
+  "email": "armandstucke@gmail.com",
+  "phone": "+33 07 99 99 99 99",
+  "birthdate": "2000-05-07",
+  "passportNumber": "KFC234099"
+}
+
+### Update Employee
+PUT http://localhost:8080/employees/3
+Content-Type: application/json
+
+{
+  "firstname": "Bob",
+  "lastname": "Jenkins",
+  "address": "1 Sesame St",
+  "email": "ceo@timeout-airlines.com",
+  "phone": "+1 908 355 0704",
+  "birthdate": "1970-07-10",
+  "employeeNumber": 100413,
+  "profession": "Executive Chairman",
+  "title": "Chairman"
+}
+
+### Create Flight 1 (Kinshasa → Budapest)
 ## Plane ID = 1 | Departure Airport = 1 | Arrival Airport = 2
 ## ##########################################
 ## 3. FLIGHT CREATION
@@ -92,11 +156,62 @@ Content-Type: application/json
   "arrivalCity": "Budapest",
   "departureTime": "2025-12-25T08:00:00",
   "arrivalTime": "2025-12-25T20:00:00",
-  "numberOfSeats": 3,
+  "numberOfSeat": 10,
   "firstClassSeatPrice": 1500,
   "premiumSeatPrice": 1000,
   "businessClassPrice": 800,
-  "economyClassPrice": 400
+  "economicsClassPrice": 400
+}
+
+### Create Flight 2 (Budapest → Kinshasa)
+POST http://localhost:8080/flights?planeId=1&departureAirportId=2&arrivalAirportId=1
+Content-Type: application/json
+
+{
+  "flightNumber": "TO-102",
+  "departureCity": "Budapest",
+  "arrivalCity": "Kinshasa",
+  "departureTime": "2025-12-25T21:00:00",
+  "arrivalTime": "2025-12-25T23:00:00",
+  "numberOfSeat": 10,
+  "firstClassSeatPrice": 1500,
+  "premiumSeatPrice": 1000,
+  "businessClassPrice": 800,
+  "economicsClassPrice": 400
+}
+
+### Create Flight 3 (Kinshasa → Budapest)
+POST http://localhost:8080/flights?planeId=1&departureAirportId=1&arrivalAirportId=2
+Content-Type: application/json
+
+{
+  "flightNumber": "TO-102",
+  "departureCity": "Kinshasa",
+  "arrivalCity": "Budapest",
+  "departureTime": "2025-12-25T21:00:00",
+  "arrivalTime": "2025-12-25T23:00:00",
+  "numberOfSeat": 10,
+  "firstClassSeatPrice": 1500,
+  "premiumSeatPrice": 1000,
+  "businessClassPrice": 800,
+  "economicsClassPrice": 400
+}
+
+### Update Flight 1
+PUT http://localhost:8080/flights/1?planeId=1&departureAirportId=1&arrivalAirportId=2
+Content-Type: application/json
+
+{
+  "flightNumber": "TO-102",
+  "departureCity": "Budapest",
+  "arrivalCity": "Kinshasa",
+  "departureTime": "2025-12-25T21:00:00",
+  "arrivalTime": "2025-12-25T23:00:00",
+  "numberOfSeat": 10,
+  "firstClassSeatPrice": 2000,
+  "premiumSeatPrice": 1500,
+  "businessClassPrice": 1300,
+  "economicsClassPrice": 900
 }
 
 ### Search Available Flights
@@ -111,34 +226,44 @@ GET http://localhost:8080/flights/search?departureCity=Kinshasa&arrivalCity=Buda
 ## 5. BOOKING TRANSACTIONS (FEATURE 7 & 8)
 ## ##########################################
 
-POST http://localhost:8080/books
+POST http://localhost:8080/booking
 Content-Type: application/json
 
 {
-  "flightNumber": "TO-101",
-  "passportNumber": "KFC234099",
+  "flightId": 1,
+  "clientId": 1,
   "seatType": "ECONOMY"
 }
 
 ### Booking 2 (Business)
-POST http://localhost:8080/books
+POST http://localhost:8080/booking
 Content-Type: application/json
 
 {
-  "flightNumber": "TO-101",
-  "passportNumber": "KFC234099",
+  "flightId": 2,
+  "clientId": 1,
   "seatType": "BUSINESS"
 }
 
 ### Booking 3 (First Class)
 ### ➜ This booking triggers MilesReward discount logic
-POST http://localhost:8080/books
+POST http://localhost:8080/booking
 Content-Type: application/json
 
 {
-  "flightNumber": "TO-101",
-  "passportNumber": "KFC234099",
+  "flightId": 3,
+  "clientId": 1,
   "seatType": "FIRST"
+}
+
+### Update Booking 1
+PUT http://localhost:8080/booking/1
+Content-Type: application/json
+
+{
+  "flightId": 1,
+  "clientId": 1,
+  "seatType": "BUSINESS"
 }
 
 ### All Clients
@@ -161,26 +286,32 @@ GET http://localhost:8080/planes
 GET http://localhost:8080/flights
 
 ### All Bookings
-GET http://localhost:8080/books
+GET http://localhost:8080/booking
 
 ### All Miles Rewards
 GET http://localhost:8080/miles-rewards
 
-### Delete Booking
+### Client 1 Miles Rewards
+GET http://localhost:8080/miles-rewards/client/1
+
+### Delete Booking 1
 ## ##########################################
 ## 7. DELETE OPERATIONS (CRUD COMPLETENESS)
 ## ##########################################
 
-DELETE http://localhost:8080/books/1
+DELETE http://localhost:8080/booking/1
 
-### Delete Flight
-DELETE http://localhost:8080/flights/TO-101
+### Delete Booking 2
+DELETE http://localhost:8080/booking/2
 
-### Delete Client
-DELETE http://localhost:8080/clients/KFC234099
+### Delete Booking 3
+DELETE http://localhost:8080/booking/3
 
-### Delete Employee
-DELETE http://localhost:8080/employees/EMP-001
+### Delete Flight 1
+DELETE http://localhost:8080/flights/1
+
+### Delete Flight 2
+DELETE http://localhost:8080/flights/2
 
 ### Delete Plane
 DELETE http://localhost:8080/planes/1
@@ -190,6 +321,16 @@ DELETE http://localhost:8080/airports/1
 
 ### Delete Airport 2
 DELETE http://localhost:8080/airports/2
+
+### Delete Client 1
+DELETE http://localhost:8080/clients/1
+
+### Delete Client 2
+DELETE http://localhost:8080/clients/2
+
+### Delete Employee
+DELETE http://localhost:8080/employees/3
+
 
 ### Get empty clients
 ## ##########################################
@@ -208,4 +349,4 @@ GET http://localhost:8080/flights
 GET http://localhost:8080/booking
 
 ### Get Miles Rewards
-GET http://localhost:8080/booking
+GET http://localhost:8080/miles-rewards

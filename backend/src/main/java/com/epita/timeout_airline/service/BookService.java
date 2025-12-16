@@ -18,9 +18,9 @@ public class BookService {
     private final ClientRepository clientRepository;
     private final MilesRewardRepository milesRewardRepository;
 
-    public Book bookFlight(Long flightId, Long passportNumber, String seatType) {
+    public Book bookFlight(Long flightId, Long clientId, String seatType) {
         Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Flight not found"));
-        Client client = clientRepository.findById(passportNumber).orElseThrow(() -> new RuntimeException("Client not found"));
+        Client client = clientRepository.findById(clientId).orElseThrow(() -> new RuntimeException("Client not found"));
 
         Book booking = new Book();
         booking.setFlight(flight);
@@ -41,8 +41,10 @@ public class BookService {
 
         long flightsThisYear = milesRewardRepository.countByClientAndDateBetween(client, startYear, endYear);
 
-        if (flightsThisYear == 3) {String discountCode = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
-            System.out.println("Discount code generated for client : " + discountCode);
+        if (flightsThisYear == 3) {
+            String discountCode = UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+            reward.setDiscountCode(discountCode);
+            milesRewardRepository.save(reward);
         }
 
         return savedBooking;

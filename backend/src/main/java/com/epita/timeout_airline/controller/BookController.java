@@ -15,8 +15,12 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping
-    public ResponseEntity<Book> bookFlight(@RequestParam Long flightId, @RequestParam Long passportNumber, @RequestParam String seatType) {
-        return ResponseEntity.ok(bookService.bookFlight(flightId, passportNumber, seatType));
+    public ResponseEntity<Book> bookFlight(@RequestBody java.util.Map<String, Object> payload) {
+        Long flightId = Long.valueOf(payload.get("flightId").toString());
+        Long clientId = Long.valueOf(payload.get("clientId").toString());
+        String seatType = (String) payload.get("seatType");
+
+        return ResponseEntity.ok(bookService.bookFlight(flightId, clientId, seatType));
     }
 
     @GetMapping("/{id}")
@@ -31,7 +35,13 @@ public class BookController {
 
     // Change seat type
     @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBooking(@PathVariable Long id, @RequestParam String seatType) {
+    public ResponseEntity<Book> updateBooking(@PathVariable Long id, @RequestBody java.util.Map<String, Object> payload) {
+        String seatType = (String) payload.get("seatType");
+
+        if (seatType == null) {
+            seatType = (String) payload.get("typeOfSeat");
+        }
+
         return ResponseEntity.ok(bookService.updateSeatType(id, seatType));
     }
 
