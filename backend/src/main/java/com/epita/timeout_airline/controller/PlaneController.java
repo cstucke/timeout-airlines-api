@@ -22,8 +22,7 @@ public class PlaneController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Plane> getPlane(@PathVariable Long id) {
-        return planeService.findById(id).map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+        return planeService.findById(id).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @GetMapping

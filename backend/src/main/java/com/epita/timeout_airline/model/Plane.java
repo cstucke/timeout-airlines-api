@@ -22,7 +22,4 @@ public class Plane {
     @Column(nullable = false)
     private int manufactureYear;
 
-    @OneToMany(mappedBy = "plane", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Flight> flights;
-
 }
