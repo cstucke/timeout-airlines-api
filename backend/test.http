@@ -185,7 +185,7 @@ POST http://localhost:8080/flights?planeId=1&departureAirportId=1&arrivalAirport
 Content-Type: application/json
 
 {
-  "flightNumber": "TO-102",
+  "flightNumber": "TO-103",
   "departureCity": "Kinshasa",
   "arrivalCity": "Budapest",
   "departureTime": "2025-12-25T21:00:00",
@@ -202,9 +202,9 @@ PUT http://localhost:8080/flights/1?planeId=1&departureAirportId=1&arrivalAirpor
 Content-Type: application/json
 
 {
-  "flightNumber": "TO-102",
-  "departureCity": "Budapest",
-  "arrivalCity": "Kinshasa",
+  "flightNumber": "TO-101",
+  "departureCity": "Kinshasa",
+  "arrivalCity": "Budapest",
   "departureTime": "2025-12-25T21:00:00",
   "arrivalTime": "2025-12-25T23:00:00",
   "numberOfSeat": 10,
@@ -246,7 +246,6 @@ Content-Type: application/json
 }
 
 ### Booking 3 (First Class)
-### ➜ This booking triggers MilesReward discount logic
 POST http://localhost:8080/booking
 Content-Type: application/json
 
@@ -294,11 +293,12 @@ GET http://localhost:8080/miles-rewards
 ### Client 1 Miles Rewards
 GET http://localhost:8080/miles-rewards/client/1
 
-### Delete Booking 1
+
 ## ##########################################
 ## 7. DELETE OPERATIONS (CRUD COMPLETENESS)
 ## ##########################################
 
+### Delete Booking 1
 DELETE http://localhost:8080/booking/1
 
 ### Delete Booking 2
@@ -307,11 +307,29 @@ DELETE http://localhost:8080/booking/2
 ### Delete Booking 3
 DELETE http://localhost:8080/booking/3
 
+### Delete All Miles Rewards for Client 1
+DELETE http://localhost:8080/miles-rewards/client/1
+
+### Delete All Miles Rewards for Client 2
+DELETE http://localhost:8080/miles-rewards/client/2
+
+### Delete Flight 1 Miles Rewards (if any remain)
+DELETE http://localhost:8080/miles-rewards/flight/1
+
+### Delete Flight 2 Miles Rewards (if any remain)
+DELETE http://localhost:8080/miles-rewards/flight/2
+
+### Delete Flight 3 Miles Rewards (if any remain)
+DELETE http://localhost:8080/miles-rewards/flight/3
+
 ### Delete Flight 1
 DELETE http://localhost:8080/flights/1
 
 ### Delete Flight 2
 DELETE http://localhost:8080/flights/2
+
+### Delete Flight 3
+DELETE http://localhost:8080/flights/3
 
 ### Delete Plane
 DELETE http://localhost:8080/planes/1
@@ -332,11 +350,11 @@ DELETE http://localhost:8080/clients/2
 DELETE http://localhost:8080/employees/3
 
 
-### Get empty clients
 ## ##########################################
 ## 8. FINAL VERIFICATION (EMPTY STATE)
 ## ##########################################
 
+### Get empty clients
 GET http://localhost:8080/clients
 
 ### Get Empty Employees
@@ -350,3 +368,9 @@ GET http://localhost:8080/booking
 
 ### Get Empty Airports
 GET http://localhost:8080/airports
+
+### Get Empty Planes
+GET http://localhost:8080/planes
+
+### Get Empty Miles Rewards
+GET http://localhost:8080/miles-rewards
