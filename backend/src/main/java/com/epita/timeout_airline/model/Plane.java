@@ -13,13 +13,13 @@ public class Plane {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "brand")
     private String brand;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "model")
     private String model;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "manufactureYear")
     private int manufactureYear;
 
 }
