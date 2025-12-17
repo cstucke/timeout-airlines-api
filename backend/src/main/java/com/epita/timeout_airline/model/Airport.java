@@ -22,9 +22,4 @@ public class Airport {
     @Column(nullable = false)
     private String country;
 
-    @OneToMany(mappedBy = "departureAirport", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Flight> departingFlights;
-
-    @OneToMany(mappedBy = "arrivalAirport", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Flight> arrivingFlights;
 }
