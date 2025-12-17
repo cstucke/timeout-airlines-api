@@ -11,23 +11,23 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class BookService {
+public class BookingService {
 
-    private final BookRepository bookRepository;
+    private final BookingRepository bookingRepository;
     private final FlightRepository flightRepository;
     private final ClientRepository clientRepository;
     private final MilesRewardRepository milesRewardRepository;
 
-    public Book bookFlight(Long flightId, Long clientId, String seatType) {
+    public Booking bookFlight(Long flightId, Long clientId, String seatType) {
         Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new RuntimeException("Flight not found"));
         Client client = clientRepository.findById(clientId).orElseThrow(() -> new RuntimeException("Client not found"));
 
-        Book booking = new Book();
+        Booking booking = new Booking();
         booking.setFlight(flight);
         booking.setClient(client);
         booking.setTypeOfSeat(seatType);
 
-        Book savedBooking = bookRepository.save(booking);
+        Booking savedBooking = bookingRepository.save(booking);
 
         MilesReward reward = new MilesReward();
         reward.setClient(client);
@@ -51,22 +51,22 @@ public class BookService {
 
     }
 
-    public Optional<Book> findById(Long id) {
-        return bookRepository.findById(id);
+    public Optional<Booking> findById(Long id) {
+        return bookingRepository.findById(id);
     }
 
-    public List<Book> findAll() {
-        return bookRepository.findAll();
+    public List<Booking> findAll() {
+        return bookingRepository.findAll();
     }
 
-    public Book updateSeatType(Long id, String seatType) {
-        Book booking = bookRepository.findById(id).orElseThrow(() -> new RuntimeException("Booking not found"));
+    public Booking updateSeatType(Long id, String seatType) {
+        Booking booking = bookingRepository.findById(id).orElseThrow(() -> new RuntimeException("Booking not found"));
         booking.setTypeOfSeat(seatType);
-        return bookRepository.save(booking);
+        return bookingRepository.save(booking);
     }
 
     public void delete(Long id) {
-        bookRepository.deleteById(id);
+        bookingRepository.deleteById(id);
     }
 
 }
